@@ -1,0 +1,15 @@
+L2.Cw1.1 - nie są potrzebne
+L2.Cw1.2 - ground(para(X,X)). - false, bo występują duże litery,  ground(para(tom,tom)). - true bo występują małe litery
+L2.Cw1.3 Dane = ksiazka(hobbit,tolkien).
+L2.Cw1.5 ponieważ test dotyczy składni termu, a nie zawartości bazy
+
+zwierze(tom).
+zwierze(fido).
+zwierze(reks).
+kot(tom).
+pies(fido).
+nieznany_gatunek(X) :- zwierze(X), \+ kot(X), \+ pies(X).
+  
+L2.Cw2.1\+ pies(tom).
+L2.Cw2.2 - kot(tom). - true, \+ kot(tom). - false
+L2.Cw2.3 - nieznany_gatunek(X). - nieznany_gatunek(X). X = reks
