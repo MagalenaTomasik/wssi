@@ -7,9 +7,92 @@ zwierze(tom).
 zwierze(fido).
 zwierze(reks).
 kot(tom).
+kot(reks).
 pies(fido).
 nieznany_gatunek(X) :- zwierze(X), \+ kot(X), \+ pies(X).
+nie_pies(X) :- zwierze(X), \+ pies(X).
+nie_kot(X) :- zwierze(X), \+ kot(X).
   
 L2.Cw2.1\+ pies(tom).
 L2.Cw2.2 - kot(tom). - true, \+ kot(tom). - false
 L2.Cw2.3 - nieznany_gatunek(X). - nieznany_gatunek(X). X = reks
+L2.Cw2.4 - nie_pies(X) - X = tom, X = reks
+L2.Cw2.5 - nie_kot(X). , X = fido
+
+osoba(ania). osoba(bartek). osoba(celina).
+osoba(dawid). osoba(ewa). osoba(filip).
+plec(ania,kobieta). plec(celina,kobieta).
+plec(ewa,kobieta).
+plec(bartek,mezczyzna). plec(dawid,mezczyzna).
+plec(filip,mezczyzna).
+lubi(ania,bartek). lubi(bartek,ania).
+lubi(ania,celina). lubi(celina,ania).
+lubi(ewa,filip). lubi(filip,ewa).
+lubi(dawid,ewa). lubi(filip,ania).
+lubi(bartek,dawid).
+unika(celina,filip). unika(filip,celina).
+unika(dawid,bartek).
+kocha(ania,bartek). kocha(bartek,ania).
+kocha(celina,dawid). kocha(dawid,celina).
+kocha(dawid,ewa).
+kocha(ewa,filip). kocha(filip,ewa)
+
+L2.Cw3.1 - lubi(filip,ania). - true , lubi(ania,filip). - false , Filip lubi Anię, ale Ania nie lubi Filipa
+L2.Cw3.2 - lubi(Kto,dawid). - Kto = bartek
+L2.Cw3.3 - plec(X,kobieta), plec(Y,mezczyzna), lubi(X,Y). - X = ania,Y = bartek , X = ewa,Y = filip
+L2.Cw3.4 - lubi(X,Y), kocha(X,Y). -  = ania,Y = bartek , X = bartek,Y = ania , X = ewa,Y = filip , X = filip,Y = ewa , X = dawid,Y = ewa
+L2.Cw3.5 - lubi(bartek,Y). - Y = ania,Y = dawid , unika(bartek,Y). - false , nikt nie unika Bartka
+
+osoba(ania). osoba(bartek). osoba(celina).
+osoba(dawid). osoba(ewa). osoba(filip).
+plec(ania,kobieta). plec(celina,kobieta).
+plec(ewa,kobieta).
+plec(bartek,mezczyzna). plec(dawid,mezczyzna).
+plec(filip,mezczyzna).
+lubi(ania,bartek). lubi(bartek,ania).
+lubi(ania,celina). lubi(celina,ania).
+lubi(ewa,filip). lubi(filip,ewa).
+lubi(dawid,ewa). lubi(filip,ania).
+lubi(bartek,dawid).
+unika(celina,filip). unika(filip,celina).
+unika(dawid,bartek).
+kocha(ania,bartek). kocha(bartek,ania).
+kocha(celina,dawid). kocha(dawid,celina).
+kocha(dawid,ewa).
+kocha(ewa,filip). kocha(filip,ewa).
+wzajemna_sympatia(X,Y) :- plec(X,kobieta), plec(Y,mezczyzna), lubi(X,Y), lubi(Y,X).
+nieprzyjazn(X,Y) :- unika(X,Y), unika(Y,X).
+niby_przyjazn(X,Y) :- lubi(X,Y), \+ lubi(Y,X).
+znajomy_znajomego(X,Z) :- lubi(X,Y), lubi(Y,Z), dif(X,Z)
+
+L2.Cw4.1 - wzajemna_sympatia(X,Y) - X = ania,Y = bartek , X = ewa,Y = filip
+L2.Cw4.2 - nieprzyjazn(X,Y). - X = celina,Y = filip , X = filip,Y = celina
+L2.Cw4.3 - niby_przyjazn(X,Y). - X = dawid,Y = ewa , X = filip,Y = ania , X = bartek,Y = dawid
+L2.Cw4.4 - znajomy_znajomego(bartek,Z). - Z = celina, Z = ewa
+L2.Cw4.5 - lubi(X,Y), lubi(X,Z), dif(Y,Z). - X = ania,Y = bartek, , Z = celinaX = bartek, , Y = ania,Z = dawid , X = ania,Y = celina, , Z = bartekX = filip, , Y = ewa,Z = ania , X = filip,Y = ania, , Z = ewaX = bartek, , Y = dawid,Z = ania x występuje podwójnie bo nie ma go w difie
+
+osoba(ania). osoba(bartek). osoba(celina).
+osoba(dawid). osoba(ewa). osoba(filip).
+plec(ania,kobieta). plec(celina,kobieta).
+plec(ewa,kobieta).
+plec(bartek,mezczyzna). plec(dawid,mezczyzna).
+plec(filip,mezczyzna).
+lubi(ania,bartek). lubi(bartek,ania).
+lubi(ania,celina). lubi(celina,ania).
+lubi(ewa,filip). lubi(filip,ewa).
+lubi(dawid,ewa). lubi(filip,ania).
+lubi(bartek,dawid).
+unika(celina,filip). unika(filip,celina).
+unika(dawid,bartek).
+kocha(ania,bartek). kocha(bartek,ania).
+kocha(celina,dawid). kocha(dawid,celina).
+kocha(dawid,ewa).
+kocha(ewa,filip). kocha(filip,ewa).
+loves(X,Y) :- kocha(X,Y), kocha(Y,X).
+true_love(X,Y) :- loves(X,Y), \+ inna_milosc(X,Y), \+ inna_milosc(Y,X).
+
+L2.Cw5.1 - unika(X,Y), \+ unika(Y,X). , X = dawid,Y = bartek
+L2.Cw5.2 - osoba(X), dif(X,ania), \+ lubi(X,ania). - X = dawidX = ewa
+L2.Cw5.3  - loves(X,Y) - X = ania,Y = bartek , X = bartek,Y = ania , X = celina,Y = dawid , X = dawid,Y = celina , X = ewa,Y = filip , X = filip,Y = ewa
+L2.Cw5.4 - true_love(X,Y). - X = ania,Y = bartek , X = bartek,Y = ania , X = ewa,Y = filip , X = filip,Y = ewa
+L2.Cw5.5 - unika(ania,bartek). - false ,  \+ unika(ania,bartek). - true . Nie dowodzi w rzeczywistości, bo brak dowodu to nie dowód przeciwieństwa
